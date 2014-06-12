@@ -1,4 +1,6 @@
 random-wallpaper
 ================
 
-Randomly selects a new wallpaper in Ubuntu
+Sets background wallpaper to a randomly chosen image
+
+Ideally used with cron to execute periodically (perhaps every 15 mins)
