@@ -9,7 +9,15 @@ import os
 import random
 import subprocess
 
-
+def set_env_variables():
+    """CRON uses a very restricted set of env variables so we must set the rest"""
+    os.environ['DISPLAY'] = ':0'
+    os.environ['GSETTINGS_BACKEND'] = 'dconf'
+    pid = subprocess.getoutput('pgrep gnome-session')
+    command = "grep -z DBUS_SESSION_BUS_ADDRESS /proc/%s/environ" % pid
+    output = subprocess.getoutput(command)
+    os.environ['DBUS_SESSION_BUS_ADDRESS'] = output[output.find('=')+1:].strip('\0')
+    
 def select_wallpaper(dir='/home/ben/Pictures/Wallpapers'):
     """selects a random wallpaper"""
     return os.path.join(dir, random.choice(os.listdir(dir)))
@@ -20,5 +28,7 @@ def set_wallpaper(filename):
     subprocess.check_output(command.split())
 
 if __name__ == '__main__':
+    set_env_variables()
     selection = select_wallpaper()
     set_wallpaper(selection)
+    print(os.environ)
