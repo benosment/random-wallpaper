@@ -29,6 +29,4 @@ def set_wallpaper(filename):
 
 if __name__ == '__main__':
     set_env_variables()
-    selection = select_wallpaper()
-    set_wallpaper(selection)
-    print(os.environ)
+    set_wallpaper(select_wallpaper())
